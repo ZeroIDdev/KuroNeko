@@ -15,7 +15,7 @@ const MoviePage = (data) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://kuro-neko-cbjk.vercel.app/movie/?page=${page}`);
+      const response = await fetch(`https://good-blue-sockeye-wrap.cyclic.app/movie/?page=${page}`);
       const json = await response.json();
       console.log(json);
       if (!error && response.ok) {
