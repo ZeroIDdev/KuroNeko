@@ -15,7 +15,7 @@ const MoviePage = (data) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/movie/?page=${page}`);
+      const response = await fetch(`https://9nks5dpm-3000.asse.devtunnels.ms/movie/?page=${page}`);
       const json = await response.json();
       console.log(json);
       if (!error && response.ok) {
