@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useState,useEffect } from "react";
-import { host } from "../../utils";
-import useAuthContext from "./useAuthContext";
 const useScroll = () => {
     const [ga,setga] = useState(1)
   useEffect(() => {

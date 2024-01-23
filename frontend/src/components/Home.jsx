@@ -6,15 +6,12 @@ import Fav from "./Fav";
 import useAuthContext from "../hooks/useAuthContext";
 import TopAnime from "./TopAnime";
 import Movie from "./Movie";
-import Complete from "./Complete";
 import Ongoing from "./Ongoing";
 export default function Home() {
   const { user } = useAuthContext();
   return (
     <div className="">
       <Ongoing/>
-      <Movie />
-      <Complete />
     </div>
   );
 }

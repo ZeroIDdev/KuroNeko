@@ -1,6 +1,6 @@
 import { useParams ,Link} from "react-router-dom";
-import { useEffect, useState,lazy } from "react";
-const CardPreview = lazy(() => import("../components/Card"));
+import { useEffect, useState } from "react";
+
 const MovieInfo = () => {
   const { slug } = useParams();
   const [data, setData] = useState("");
@@ -28,7 +28,7 @@ const MovieInfo = () => {
       <div>
         {!data && <div className=""></div>}
         {data && (
-          <div className="flex flex-col items-center w-full">
+          <div className="grid grid-cols-4">
             <img
               src={data && data.poster}
               alt="anime Img"
@@ -41,11 +41,11 @@ const MovieInfo = () => {
               <li>Ongoing</li>
             </ul>
 
-            <div className="">{
+            <div className=" col-span-3 row-start-1  col-start-2">{
                  <iframe
                  src={data.videoPlayer[0].url}
                  frameBorder="0"
-                 className="w-[400px]  aspect-video"
+                 className="w-full  aspect-video"
                  allow="autoplay;"
                  allowFullScreen
                ></iframe>

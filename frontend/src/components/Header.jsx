@@ -78,8 +78,8 @@ export function Header({ setInputValue }) {
        
        
       </div>
-      <Link to="/">
-            <img src={Logo} alt="" className="w-[25rem]" />
+          <Link to="/" className=" overflow-hidden h-20 w-28 scale-150">
+            <img src={Logo} alt="" className=" scale-125 h-20" />
           </Link>{" "}
       <div>
         

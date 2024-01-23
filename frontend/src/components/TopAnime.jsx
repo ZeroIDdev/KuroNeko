@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import SkeletonCard from "./SkeletonCard";
 import useScroll from "../hooks/useScroll";
+import { api } from "../utils";
 const CardPreview = lazy(() => import("./Card"));
 const TopAnime = (data) => {
   const [scroll] = useScroll();
@@ -12,20 +13,21 @@ const TopAnime = (data) => {
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [max,setMax] = useState(false)
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/ongoing/?page=${page}`);
+      if (!max) {
+      const response = await fetch(`${api}/ongoing-anime/${page}`);
       const json = await response.json();
-      console.log(json);
       if (!error && response.ok) {
+        if (json.pagination.has_next_page===false) setMax(true)
         setLoading(false);
-        setHome((prev) => [...prev, ...json.list]);
+        setHome((prev) => [...prev, ...json.data]);
         setError(false);
       }
       if (!response.ok) {
         setError(true);
-      }
+      }}
     } catch (error) {
       console.error("Error fetching data:", error);
       setError(true);
@@ -42,6 +44,9 @@ const TopAnime = (data) => {
 
   useEffect(() => {
     (async () => {
+      if (max) {
+        return
+      }
       setLoading(true);
       await fetchData();
     })();

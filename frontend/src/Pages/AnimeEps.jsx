@@ -44,52 +44,63 @@ const AnimeEps = () => {
   return (
     <div className="flex flex-col items-center">
       {!frameLoad && (
-        <div className="absolute aspect-video w-full bg-base-200 skeleton border-none rounded-none"></div>
+        <div className="absolute aspect-video lg:w-8/12 right-0 lg:h-[27.2rem] h-[17rem] bg-base-200 skeleton border-none rounded-none"></div>
       )}
-      {data ? (
-        <div className="w-full flex justify-end ">
-          <iframe
-            src={url}
-            frameBorder="0"
-            className="w-full md:w-9/12  aspect-video "
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            autoPlay
-            onLoad={() => setFrameLoad(true)}
-          ></iframe>
-        </div>
-      ) : (
-        <h1>Loading...</h1>
-      )}
-      <h1 className="w-full px-5 text-base pt-4">episodes : </h1>
-      <div className="grid grid-flow-col gap-2 lg:auto-cols-[10rem] md:auto-cols-[9rem] auto-cols-[2.5rem] px-5 md:px-8 lg:px-12 overflow-x-auto h-auto w-full no-scrollbar pt-3">
-        {element.length > 0 &&
-          element.map((e) => {
-            return (
-              <div
-                key={e}
-                className={`bg-base-100  font-medium aspect-square text-center flex items-center justify-center rounded-lg `}
-              >
-                <Link
-                  className=""
-                  to={`/anime/eps/${slugEps}/${e}`}
-                  onClick={() => setFrameLoad(false)}
-                >
-                  <p
-                    className={`${
-                      e == data.currentEpisodes ? "text-aksen" : ""
-                    }`}
+      <div className="lg:grid grid-cols-3 w-full grid-flow-row auto-rows-min ">
+        {data ? (
+          <div className=" max-w-7xl h-max col-span-2 row-span-5 col-start-2 order-last lg:p-3">
+            <iframe
+              src={url}
+              frameBorder="0"
+              className="w-full aspect-video "
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              autoPlay
+              onLoad={() => setFrameLoad(true)}
+            ></iframe>
+          </div>
+        ) : (
+          <h1>Loading...</h1>
+        )}
+        {data && (
+          <div className="w-full p-6 ml-6 order-1">
+            <h1 className="text-2xl">{data.title}</h1>
+            <h1 className="">Episode {data.currentEpisodes}</h1>
+          </div>
+        )}
+        <div className=" col-span-1 col-start-1 row-span-3 row-start-2  hidden lg:block">
+          <h1 className="w-full px-5 text-base pt-4 lg:ml-7">episodes : </h1>
+          <div className="grid grid-flow-col lg:grid-cols-6 lg:grid-flow-row  gap-2 lg:auto-cols-[3rem] md:auto-cols-[9rem] auto-cols-[2.5rem] px-5 md:px-8 lg:px-12 overflow-x-auto h-auto lg:max-h-96 w-full no-scrollbar pt-3 overflow-y-auto max-w-[40rem] lg:h-80 pb-7 mb-14">
+            {element.length > 0 &&
+              element.map((e) => {
+                return (
+                  <div
+                    key={e}
+                    className={`bg-base-100  font-medium aspect-square text-center flex items-center justify-center rounded-lg  w-8`}
                   >
-                    {" "}
-                    {e}
-                  </p>
-                </Link>
-              </div>
-            );
-          })}
+                    <Link
+                      className=""
+                      to={`/anime/eps/${slugEps}/${e}`}
+                      onClick={() => setFrameLoad(false)}
+                    >
+                      <p
+                        className={`${
+                          e == data.currentEpisodes ? "text-aksen" : ""
+                        }`}
+                      >
+                        {" "}
+                        {e}
+                      </p>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
+
       {data && (
-        <div className="w-full p-6">
+        <div className="w-full p-6 lg:hidden">
           <h1 className="text-2xl">{data.title}</h1>
           <h1 className="">Episode {data.currentEpisodes}</h1>
         </div>

@@ -52,8 +52,12 @@ export default function Card({ data, scroll }) {
       }
     >
       <div className="bg-[#029EFF] w-12 h-6 relative top-[1.5rem] rounded rounded-bl-xl z-20 text-center text-xs flex items-center justify-center gap-1">
-        <FaStar />
-        {data.star}
+        {data.release_day|| (()=> {
+       
+       return (
+       
+       <h1 className="flex items-center gap-1"><FaStar/> {data.rating}</h1>)
+        })()}
       </div>
       <div className="overflow-hidden rounded lg:rounded-xl hover:shadow-[0px_-57px_124px_-88px_rgba(0,0,0,1)_inset] bg-[#029EFF] hover:brightness-50 h-5/6 w-full">
       <img
@@ -65,8 +69,8 @@ export default function Card({ data, scroll }) {
       </div>
      
       <div className="w-full">
-        <div className="bg-[#029EFF] w-[3rem] h-6 relative bottom-[1.5rem] rounded rounded-tr-xl text-center text-xs font-normal flex items-center gap-1 px-2">
-          {data.type||data.episode}
+        <div className="bg-[#029EFF] w-fit h-6 relative bottom-[1.5rem] rounded rounded-tr-xl text-start text-xs font-normal flex items-center gap-1 px-2">
+          {data.current_episode||`Episode ${data.episode_count}`}
         </div>
       </div>
       {/* <h3

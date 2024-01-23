@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { host } from "../../utils";
+import { host } from "../utils";
 import useAuthContext from "./useAuthContext";
 const useLogin = () => {
     const {dispatch} = useAuthContext()

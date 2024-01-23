@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import SkeletonCard from "../components/SkeletonCard";
 import useScroll from "../hooks/useScroll";
+import { api } from "../utils";
 const CardPreview = lazy(() => import("../components/Card"));
 const CompletePage = (data) => {
   const [scroll] = useScroll();
@@ -12,19 +13,21 @@ const CompletePage = (data) => {
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [max, setMax] = useState(false);
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/completed/?page=${page}`);
-      const json = await response.json();
-      console.log(json);
-      if (!error && response.ok) {
-        setLoading(false);
-        setHome((prev) => [...prev, ...json.list]);
-        setError(false);
-      }
-      if (!response.ok) {
-        setError(true);
+      if (!max) {
+        const response = await fetch(`${api}/complete-anime/${page}`);
+        const json = await response.json();
+        if (!error && response.ok) {
+        if (json.pagination.has_next_page===false) setMax(true)
+          setLoading(false);
+          setHome((prev) => [...prev, ...json.data]);
+          setError(false);
+        }
+        if (!response.ok) {
+          setError(true);
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -42,6 +45,9 @@ const CompletePage = (data) => {
 
   useEffect(() => {
     (async () => {
+      if (max) {
+        return
+      }
       setLoading(true);
       await fetchData();
     })();
@@ -64,12 +70,11 @@ const CompletePage = (data) => {
           {!Home.length &&
             array.map((e, index) => <SkeletonCard key={index} />)}
 
-          {loading &&
-            array.map((e, index) => <SkeletonCard key={index} />)}
+          {loading && array.map((e, index) => <SkeletonCard key={index} />)}
 
           {error && (
             <div>
-             <h1>Opss Something Went Error X﹏X</h1>
+              <h1>Opss Something Went Error X﹏X</h1>
             </div>
           )}
         </div>

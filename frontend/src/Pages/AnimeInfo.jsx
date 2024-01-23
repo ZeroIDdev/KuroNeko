@@ -1,30 +1,26 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { api } from "../utils";
 const AnimeInfo = () => {
   const { slug } = useParams();
   const [data, setData] = useState("");
   const [eps, setEps] = useState([]);
-  const [Ecchi,setEcchi] = useState(false)
+  const [Ecchi, setEcchi] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/anime/${slug}`);
+        const response = await fetch(`${api}/anime/${slug}`);
         const json = await response.json();
         console.log(json);
         if (response.ok) {
-          setData(json);
-          for (let i = 0; i < json.currentTotalEpisodes; i++) {
-            setEps((prev) => [...prev, i + 1]);
-            console.log(eps);
-          }
-          eps.splice(0, json.currentTotalEpisodes);
-          if (json.genres.includes('Ecchi')) {
-            setEcchi(true)
-          }else{
-            setEcchi(false)
-          }
-          
-         
+          setData(json.data);
+          setEps(json.data.episode_lists);
+          // eps.splice(0, json.currentTotalEpisodes);
+          // if (json.genres.includes("Ecchi")) {
+          //   setEcchi(true);
+          // } else {
+          //   setEcchi(false);
+          // }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,38 +32,64 @@ const AnimeInfo = () => {
 
   return (
     <div>
-      {
-        Ecchi&&(<div>
+      {/* {Ecchi && (
+        <div>
           <h1 className=" text-3xl h-screen">Opps Anime ini tidak tersedia</h1>
-        </div>)
-      }
+        </div>
+      )} */}
       <div>
-        {!data&&!Ecchi&& (
+        {!data && (
           <div className="">
             <div className="skeleton w-44 aspect-square"></div>
           </div>
         )}
-        {data&&!Ecchi && (
-          <div className="flex flex-col items-center md:items-start w-full">
+        {data && !Ecchi && (
+          <div className="flex flex-col items-center lg:items-start w-full mt-10 lg:-mt-10">
             <div className="lg:grid grid-cols-4 grid-flow-row auto-cols-fr lg:gap-10 gap-2 flex-col flex items-center">
               {" "}
               <img
                 src={data && data.poster}
                 alt="anime Img"
-                className="w-40 lg:m-10 lg:w-56  rounded mt-8 row-span-3"
+                className="w-40 lg:m-10 lg:w-56  rounded row-span-3 row-start-1"
               />
-              <h1 className="text-2xl lg:mt-16 mt-8 text-center lg:text-start inline col-span-3 lg:pr-10 mx-5">
-                {data.title}
-              </h1>
+              <div className="lg:mt-16 mt-8 text-center lg:text-start col-start-2 row-start-1 col-span-3 lg:pr-10 mx-5 flex-col flex">
+                <h1 className="text-2xl mb-3">{data.title}</h1>
+                <div className="flex gap-3 mt-3">
+                  {data.genres.map((e, index) => (
+                    <button key={`${e}-${index}`} className="">
+                      <Link
+                        className="border-aksen border rounded-lg p-2 w-fit text-xs hover:bg-aksen"
+                        to={`/genre/${e.slug}`}
+                      >
+                        {e.name}
+                      </Link>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className=" col-start-2 row-start-1 "></div>
               <ul className="flex gap-3 flex-col w-10/12 pb-8 mx-5 box-content col-span-2 col-start-2 row-start-2">
-                <li>Type : Anime</li>
-                <li>7.1</li>
-                <li>Status : Ongoing</li>
+                <li>Type : {data.type}</li>
+                <li>Rating : {data.rating}</li>
+                <li>Status : {data.status}</li>
+                <li>Current Total Episode : {data.episode_lists.length}</li>
               </ul>
-              <button className="btn btn-active btn-neutral bg-base-100 row-start-3 col-start-2 "><Link to={data.detailsList[8].title === "Ongoing"?`/anime/eps/${data.slugPlayer}/${data.currentTotalEpisodes}`:`/anime/eps/${data.slugPlayer}/1}`}>Tonton Sekarang</Link></button>
+              <Link
+                to={
+                  data.status === "Ongoing"
+                    ? `/anime/eps/${
+                        data.episode_lists[data.episode_lists.length - 1].slug
+                      }`
+                    : `/anime/eps/${data.episode_lists[0]}`
+                }
+                className="btn btn-active btn-neutral  row-start-3 col-start-2  w-44 border-aksen bg-aksen lg:row-start-2 lg:col-start-3"
+              >
+                {" "}
+                <button className=" text-neutral-50">Tonton Sekarang</button>
+              </Link>
               <div className=" row-start-4  col-span-4 px-10 ">
-                <h1 className=" font-semibold text-lg pb-5">Deskripsi</h1>
-               <p className=" pb-10">{data.description}</p> 
+                <h1 className=" font-semibold text-lg pb-5">Synopsis</h1>
+                <p className=" pb-10">{data.synopsis}</p>
               </div>
             </div>
 
@@ -75,15 +97,17 @@ const AnimeInfo = () => {
 
             <div className="flex flex-col lg:flex-row flex-wrap lg:p-10 ">
               {eps &&
-                eps.map((e) => {
+                eps.map((e,i) => {
                   return (
                     <div
                       className=" w-80 bg-base-100 p-5 border lg:w-40"
-                      key={e}
+                      key={e.slug}
                     >
                       <h1 className=" max-w-full">
-                        <Link to={`/anime/eps/${data.slugPlayer}/${e}`}>
-                          Episode {e}
+                        <Link to={`/anime/eps/${e.slug}`}>
+                          {`${e.episode
+                            .split(" ")
+                            .find((word) => word.includes("Episode"))} ${i+1}`}
                         </Link>
                       </h1>
                     </div>
