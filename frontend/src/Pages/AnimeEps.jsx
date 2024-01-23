@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { api } from "../utils";
 
 const AnimeEps = () => {
   const [data, setData] = useState(null);
@@ -13,20 +14,13 @@ const AnimeEps = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/anime/${slugEps}/${eps}`
+          `${api}/episode/${slugEps}`
         );
         const json = await response.json();
 
-        const originalString = json.videoPlayer[streamServer].url;
-        const wordToRemove = "&autoplay=true";
-
-        const stringWithoutWord = originalString.replace(
-          new RegExp(wordToRemove, "g"),
-          ""
-        );
         if (response.ok) {
-          setUrl(stringWithoutWord);
-          setData(json);
+          setUrl(json.data.stream_url);
+          setData(json.data);
           setElement(
             Array.from(
               { length: json.currentTotalEpisodes },
@@ -49,6 +43,7 @@ const AnimeEps = () => {
       <div className="lg:grid grid-cols-3 w-full grid-flow-row auto-rows-min ">
         {data ? (
           <div className=" max-w-7xl h-max col-span-2 row-span-5 col-start-2 order-last lg:p-3">
+            <div className="absolute w-0 h-0 bg-aksen right-16 top-[7.3rem] opacity-0  border border-aksen p-5" onClick={()=>alert('ank')}></div>
             <iframe
               src={url}
               frameBorder="0"
@@ -106,7 +101,7 @@ const AnimeEps = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-2 p-5 grid-flow-row auto-cols-fr bg-base-100 m-3 gap-y-3 w-11/12">
+      {/* <div className="grid grid-cols-3 gap-2 p-5 grid-flow-row auto-cols-fr bg-base-100 m-3 gap-y-3 w-11/12">
         <h1 className=" col-span-3 ">Stream Server:</h1>
         {data &&
           data.videoPlayer.map((e, i) => {
@@ -124,10 +119,10 @@ const AnimeEps = () => {
                 </p>
               </div>
             );
-          })}
-        <h1 className=" col-span-3">Download Link</h1>
+          })} */}
+        {/* <h1 className=" col-span-3">Download Link</h1>
         {data &&
-          data.downloadLink.map((e) => {
+          data.download_urls.mkv.map((e) => {
             return (
               <div
                 key={e.url}
@@ -140,8 +135,8 @@ const AnimeEps = () => {
                 </Link>
               </div>
             );
-          })}
-      </div>
+          })} */}
+      {/* </div> */}
     </div>
   );
 };
