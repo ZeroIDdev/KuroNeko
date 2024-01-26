@@ -80,7 +80,7 @@ const Ongoing = (data) => {
         <h1 className="mx-5 mb-2 underline font-medium">
           <Link to="/complete">View All</Link>
         </h1>
-        <div className="grid grid-flow-col gap-5 lg:auto-cols-[10rem] md:auto-cols-[9rem] auto-cols-[7rem] px-5 md:px-8 lg:px-12  overflow-x-auto h-auto w-full no-scrollbar">
+        <div className="grid grid-flow-col gap-x-2 md:gap-x-4 lg:auto-cols-[10rem] md:auto-cols-[9rem] auto-cols-[7rem] px-5 md:px-8 lg:px-12  overflow-x-auto h-auto w-full no-scrollbar">
           {Complete &&
             Complete.map((e, index) => {
               return (
