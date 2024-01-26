@@ -51,7 +51,7 @@ const Ongoing = (data) => {
         <h1 className="mx-5 underline font-medium">
           <Link to="/Ongoing">View All</Link>
         </h1>
-        <div className="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 auto-cols-fr grid-flow-row h-auto w-full">
+        <div className="grid grid-cols-3 gap-x-2 md:gap-x-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 auto-cols-fr grid-flow-row h-auto w-full">
           {Ongoing &&
             Ongoing.map((e, index) => {
               return (

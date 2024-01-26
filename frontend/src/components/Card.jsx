@@ -59,7 +59,7 @@ export default function Card({ data, scroll }) {
        <h1 className="flex items-center gap-1"><FaStar/> {data.rating}</h1>)
         })()}
       </div>
-      <div className="overflow-hidden rounded lg:rounded-xl hover:shadow-[0px_-57px_124px_-88px_rgba(0,0,0,1)_inset] bg-[#029EFF] hover:brightness-50 h-5/6 w-full">
+      <div className="overflow-hidden rounded lg:rounded-xl hover:shadow-[0px_-57px_124px_-88px_rgba(0,0,0,1)_inset] hover:brightness-50 h-5/6 w-full">
       <img
         className="rounded w-full bg-cover hover:scale-125 transition-all lg:rounded-xl h-max  aspect-[3/4]  hover:rotate-6 bg-base-300"
         src={data.poster}
