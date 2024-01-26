@@ -43,7 +43,7 @@ const Ongoing = (data) => {
     fetchData()
   },[])
   return (
-    <div className={` w-11/12 mx-auto`}>
+    <div className={` w-11/12 mx-auto red`}>
       <div className="flex justify-center">
         <h1 className=" font-bold text-2xl mt-5 ">New Update</h1>
       </div>

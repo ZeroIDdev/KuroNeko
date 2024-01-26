@@ -37,13 +37,15 @@ export default function App() {
           element={!user ? <Register /> : <Navigate to="/" />}
         />
       </Routes>
-   
+   <div>
+    
+   </div>
       <Header/>
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/fav" element={user ? <FavPage /> : <Navigate to="/" />} />
         <Route path="/anime/:slug" element={<AnimeInfo />} />
-        <Route path="/anime/eps/:slugEp" element={<AnimeEps />} />
+        <Route path="/anime/eps/:slugEps" element={<AnimeEps />} />
         <Route path="/movie/:slug" element={<MovieInfo />} />
         <Route path="/search" element={<Search />} />
         <Route path="/ongoing" element={<OngoingPage />} />

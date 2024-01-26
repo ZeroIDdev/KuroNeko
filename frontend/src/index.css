@@ -4,12 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.card::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
+@layer utilities {
   *{
-    color: #ffffff;
+    color:ghostwhite;
   }
+}
+

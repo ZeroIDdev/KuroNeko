@@ -95,22 +95,23 @@ const AnimeInfo = () => {
 
             <h1 className=" text-2xl font-bold  mx-10  mb-5">All Episodes</h1>
 
-            <div className="flex flex-col lg:flex-row flex-wrap lg:p-10 ">
+            <div className="flex flex-col lg:flex-row flex-wrap lg:p-10 gap-3 ">
               {eps &&
                 eps.map((e,i) => {
                   return (
+                    <Link to={`/anime/eps/${e.slug}`} key={e.slug}>
                     <div
-                      className=" w-80 bg-base-100 p-5 border lg:w-40"
-                      key={e.slug}
+                      className=" w-80 bg-base-100 p-5 border lg:w-40 rounded-lg hover:text-aksen "
+                      
                     >
-                      <h1 className=" max-w-full">
-                        <Link to={`/anime/eps/${e.slug}`}>
+                      <h1 className="hover:text-aksen max-w-full">
+                 
                           {`${e.episode
                             .split(" ")
                             .find((word) => word.includes("Episode"))} ${i+1}`}
-                        </Link>
                       </h1>
                     </div>
+                    </Link>
                   );
                 })}
             </div>
