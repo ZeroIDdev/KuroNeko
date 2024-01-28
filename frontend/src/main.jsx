@@ -7,7 +7,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvider>
     <FavContexProvider>
       <div className="bg-[rgb(11,22,34)]">
-        <App />
+        <h1>Maaf Website kami sedang maintenance</h1>
       </div>
     </FavContexProvider>
   </AuthContextProvider>
